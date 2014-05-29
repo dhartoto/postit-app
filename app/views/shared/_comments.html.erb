@@ -1,0 +1,33 @@
+<% show_post ||= false %>
+
+<% obj.each do |comment| %>
+
+  <div class = "row">
+    <% if logged_in? %>
+        <div class="spand4 well text-center">
+          <%= link_to votes_post_comment_path(comment.post, comment, vote: true), method: :post do %>
+            <i class="icon-chevron-up"></i></br>
+          <% end %>
+          <%= comment.count_votes %> votes</br>
+          <%= link_to votes_post_comment_path(comment.post, comment, vote: false), method: :post do %>
+            <i class="icon-chevron-down"></i>
+          <% end %>
+        </div>
+    <% end %>
+
+    <div class="span8 well">
+      <em>"<%= comment.body %>"</em>
+      <% if show_post %>
+        on <%= link_to "#{comment.post.title}", post_path(comment.post) %>
+      <% end %>
+      <br/>
+        <span class='quiet'>commented </span>
+          <% if comment.creator == nil %>
+
+          <% else %>
+            by <%= link_to comment.creator.username, user_path(comment.user_id) %>
+          <% end %>
+        at <%= fix_date(comment.created_at) %>
+    </div>
+  </div>
+<% end %>

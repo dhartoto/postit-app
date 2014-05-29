@@ -1,0 +1,35 @@
+<% posts.each do |post| %>
+  <div class="row">
+    <% if logged_in? %>
+      <div class='spand4 well text-center'>
+        <%= link_to votes_post_path(post,vote: true), method: :post do %>
+          <i class="icon-chevron-up"></i></br>
+        <% end %>
+        <%= post.count_votes %> votes</br>
+        <%= link_to votes_post_path(post,vote: false), method: :post do %>
+          <i class="icon-chevron-down"></i>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class='span8 well'>
+      
+      <%= render post.categories %> <!--This passes in each category obj and looks for the category partial in the categories folder -->
+      
+      <h4><%= link_to post.title, "http://#{post.url}" %></li></h4>
+      <p class="white"><%= post.description %></p>
+      <p>
+        <span class='quiet'>posted </span>
+          <% if post.creator == nil %>
+
+          <% else %>
+            by <%= link_to post.creator.username, user_path(post.creator.id) %>
+          <% end %>
+        at <%= fix_date(post.created_at) %>
+      </p>
+      <span>
+        <%= link_to "#{post.comments.size} comments", post_path(post) %>
+      </span>
+    </div>
+  </div>
+<% end %>

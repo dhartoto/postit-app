@@ -1,0 +1,22 @@
+<%= render 'shared/content_title', title: 'Login' %>
+
+<div class="well span3 offset3">
+  <h4 class="text-center">Login</h4><br/>
+  <%= form_tag '/login' do %>
+    <div class="control-group">
+        <%= label_tag :username %>
+        <%= text_field_tag :username, params[:username] || '' %>
+    </div>
+    <div class="control-group">
+      <%= label_tag :password %>
+      <%= password_field_tag :password, params[:password] || '' %>
+      <br/>
+    </div>
+    <%= submit_tag "Login", class: "btn btn-info" %>
+  <% end %>
+</div>
+<div class="register well span3 text-center">
+  <h4>Or Register</h4>
+  <br/><br/><br/>
+  <%= link_to 'Register', register_path, class: "btn btn-info" %>
+</div>

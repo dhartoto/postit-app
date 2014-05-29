@@ -1,0 +1,38 @@
+<% if session[:user_id] == @post.user_id %>
+  <p class='pull-right'>
+    <%= link_to "Edit this post", edit_post_path(@post), class:"btn btn-success" %>
+  </p>
+<% end %>
+<!--List of categories -->
+<p>
+  <%= render @post.categories %>
+</p>
+
+<!-- Page Title -->
+<% title_link = link_to(@post.title, fix_url(@post.url)) %>
+
+<%= render 'shared/content_title', title: title_link %>
+<!-- Page description -->
+  <div class="well">
+  <p><%= @post.description %></p>
+  </div>
+  <br/>
+  <hr/>
+<!-- Comment form -->
+<%= render 'shared/alert', alert: @comment.errors %>
+
+<% if logged_in? %>
+  <%= form_for [@post, @comment] do |f| %>
+    <div class="control-group">
+      <%= f.label :body, "Leave a comment" %>
+      <%= f.text_area :body, rows: 5, class: 'span4'%>
+      <br/>
+      <%= f.submit "Create Comments", class: 'btn btn-info'%>
+    </div
+  <% end %>
+<% end %>
+
+<!--Iterate through all comments -->
+
+<h5>Comments:</h5>
+<%= render 'shared/comments', {obj: @post.comments, show: false} %>

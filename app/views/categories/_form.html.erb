@@ -1,0 +1,8 @@
+<%= render 'shared/alert', alert: @category.errors %>
+
+<%= form_for @category do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br/>
+  <%= f.submit(@category.new_record? ? "Create Category" : "Edit Category", class: 'btn btn-info') %>
+<% end %>
