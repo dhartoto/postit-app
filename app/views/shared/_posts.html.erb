@@ -23,7 +23,7 @@
           <% if post.creator == nil %>
 
           <% else %>
-            by <%= link_to post.creator.username, user_path(post.creator.id) %>
+            by <%= link_to post.creator.username, user_path(post.creator) %>
           <% end %>
         at <%= fix_date(post.created_at) %>
       </p>
