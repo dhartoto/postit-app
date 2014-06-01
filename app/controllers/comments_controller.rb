@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(set_comment)
     @comment.post = @post 
     @comment.creator = current_user
-    @comments = @post.comments.all.sort_by{|x| x.count_votes}
+    @comments = @post.comments.all.sort_by{|x| x.count_votes}.reverse
     if @comment.save
       flash[:notice] = "Your comment has been posted"
       redirect_to post_path(@post)
@@ -16,12 +16,16 @@ class CommentsController < ApplicationController
   end
 
   def vote
-    @comment = Comment.find(params[:id])
-    @vote = Vote.create(vote: params[:vote], voteable: @comment, creator: current_user)
+    @obj = Comment.find(params[:id])
+    @vote = Vote.create(vote: params[:vote], voteable: @obj, creator: current_user)
     if !@vote.valid?
       flash[:error] = "You can only vote once per comment."
     end
-    redirect_to :back
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {render 'posts/vote'}
+    end
   end
 
   private

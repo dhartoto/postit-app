@@ -1,4 +1,4 @@
 <% if !flash.empty? %>
-  $('#msg').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">&#215;</a><div id="flash_notice">You can only vote once per post.</div></div>');
+  $('#msg').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">&#215;</a><div id="flash_notice">You can only vote once.</div></div>');
 <% end %>
-$('#post_<%= @post.id %>_vote').html('<%= @post.count_votes %> votes');
+$('#vote_<%= @obj.id %>').html('<%= @obj.count_votes %> votes');

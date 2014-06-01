@@ -5,11 +5,11 @@
   <div class = "row">
     <% if logged_in? %>
         <div class="spand4 well text-center">
-          <%= link_to votes_post_comment_path(comment.post, comment, vote: true), method: :post do %>
+          <%= link_to votes_post_comment_path(comment.post, comment, vote: true), remote: true, method: :post do %>
             <i class="icon-chevron-up"></i></br>
           <% end %>
-          <%= comment.count_votes %> votes</br>
-          <%= link_to votes_post_comment_path(comment.post, comment, vote: false), method: :post do %>
+          	<span id="vote_<%= comment.id %>"><%= comment.count_votes %> votes</span></br>
+          <%= link_to votes_post_comment_path(comment.post, comment, vote: false), remote: true, method: :post do %>
             <i class="icon-chevron-down"></i>
           <% end %>
         </div>

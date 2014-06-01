@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :vote]
+  before_action :set_post, only: [:show, :edit, :update]
   before_action :require_user, except: [:index, :show]
 
   def index
@@ -37,15 +37,16 @@ class PostsController < ApplicationController
   end
 
   def vote
-    @vote = Vote.create(vote: params[:vote], user_id: current_user.id, voteable: @post)
+    @obj = Post.find(params[:id])
+    @vote = Vote.create(vote: params[:vote], user_id: current_user.id, voteable: @obj)
     
     if !@vote.valid?
       flash[:error] = "You can only vote once per post."
     end
-    
+
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js
+      format.js { render 'posts/vote'}
     end
   end
 
