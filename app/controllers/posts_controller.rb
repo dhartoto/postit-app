@@ -37,7 +37,7 @@ class PostsController < ApplicationController
   end
 
   def vote
-    @obj = Post.find(params[:id])
+    @obj = Post.find_by(slug: params[:id])
     @vote = Vote.create(vote: params[:vote], user_id: current_user.id, voteable: @obj)
     
     if !@vote.valid?
@@ -52,10 +52,10 @@ class PostsController < ApplicationController
 
 private
   def post_params
-    params.require(:post).permit(:url, :title, :description, category_ids: [])
+    params.require(:post).permit(:url, :title, :description, :slug, category_ids: [])
   end
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by(slug: params[:id])
   end
 end
