@@ -2,6 +2,8 @@
 
 <% obj.each do |comment| %>
 
+<!--Vote Section-->
+
   <div class = "row">
     <% if logged_in? %>
         <div class="spand4 well text-center">
@@ -14,6 +16,8 @@
           <% end %>
         </div>
     <% end %>
+
+<!--Comment Section-->
 
     <div class="span8 well">
       <em>"<%= comment.body %>"</em>
