@@ -5,7 +5,7 @@
         <%= link_to votes_post_path(post, vote: true), method: :post, remote: true do %>
           <i class="icon-chevron-up"></i></br>
         <% end %>
-        	<span id="vote_<%= post.id %>"><%= post.count_votes %> votes</span></br>
+        	<span id="vote_<%= post.slug %>"><%= post.count_votes %> votes</span></br>
         <%= link_to votes_post_path(post, vote: false), method: :post, remote: true do %>
           <i class="icon-chevron-down"></i>
         <% end %>
