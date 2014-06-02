@@ -5,12 +5,12 @@ class Post < ActiveRecord::Base
   has_many :categories, through: :post_categories
   has_many :votes, as: :voteable
   
-  after_validation :create_slug
+  before_save :create_slug
 
   validates :title, presence: true, length: {minimum: 5}
   validates :url, presence: true, uniqueness: true
   validates :description, presence: true
-  # validates :create_slug, uniqueness: true
+  validates :slug, uniqueness: true
 
   def count_votes
     count_true - count_false
@@ -25,7 +25,13 @@ class Post < ActiveRecord::Base
   end
   
   def create_slug
-    self.slug = self.title.gsub(' ', '_').downcase  
+    self.slug = self.title.gsub(' ', '_').downcase
+    count = 1
+    while !!Post.exists?(slug: self.slug)
+      self.slug = self.slug + '_'+ count.to_s
+      count += 1
+    end
+    self.slug
   end
    
   def to_param
