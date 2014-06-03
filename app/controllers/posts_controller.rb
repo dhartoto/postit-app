@@ -37,8 +37,8 @@ class PostsController < ApplicationController
   end
 
   def vote
-    @obj = Post.find_by(slug: params[:id])
-    @vote = Vote.create(vote: params[:vote], user_id: current_user.id, voteable: @obj)
+    @post = Post.find_by(slug: params[:id])
+    @vote = Vote.create(vote: params[:vote], user_id: current_user.id, voteable: @post)
     
     if !@vote.valid?
       flash[:error] = "You can only vote once per post."
@@ -46,7 +46,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { render 'posts/vote'}
+      format.js { render 'vote'}
     end
   end
 
