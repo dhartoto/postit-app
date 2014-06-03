@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:username])
 
     if user && user.authenticate(params[:password]) # If there is a user, if not short circuit.
-      session[:user_id] = user.id                   # don't save object because it takes up too much space.
+      session[:user_id] = user.slug                   # don't save object because it takes up too much space.
       flash[:notice] = "Welcome #{user.username}! You're logged in."
       redirect_to root_path
     else
