@@ -3,8 +3,8 @@ class UsersController < ApplicationController
   before_action :user_access, only: [:edit, :update]
 
   def show
-    @posts = Post.where(user_id: params[:id]).sort_by{|x| x.count_votes}.reverse
-    @comments = Comment.where(user_id: params[:id]).sort_by{|x| x.count_votes}.reverse
+    @posts = Post.where(user_id: @user.id).sort_by{|x| x.count_votes}.reverse
+    @comments = Comment.where(user_id: @user.id).sort_by{|x| x.count_votes}.reverse
   end
 
   def new
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:notice] = "Welcome #{@user.username}! You are now registered."
-      session[:user_id] = @user.id
+      session[:user_id] = @user.slug
       redirect_to root_path
     else
       render :new
@@ -46,6 +46,6 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(slug: params[:id])
   end
 end

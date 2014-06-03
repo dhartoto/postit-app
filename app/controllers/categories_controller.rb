@@ -27,7 +27,6 @@ class CategoriesController < ApplicationController
   def edit; end
 
   def update
-
     if @category.update(category_params)
       flash[:notice] = "Your category has been updated"
       redirect_to posts_path
@@ -43,6 +42,6 @@ class CategoriesController < ApplicationController
   end
 
   def set_catagory
-    @category = Category.find(params[:id])
+    @category = Category.find_by(slug: params[:id])
   end
 end
