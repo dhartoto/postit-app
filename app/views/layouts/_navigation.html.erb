@@ -9,7 +9,7 @@
       <% Category.all.each do |category| %>
         <li><%= link_to category.name, category_path(category) %></li>
       <% end %>
-      <% if logged_in? %>
+      <% if logged_in? && current_user.admin? %>
         <li class='divider'></li>
         <li>
           <%= link_to(categories_path) do %>

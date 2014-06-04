@@ -16,5 +16,4 @@ module Voteable
   def count_false
     self.votes.where(vote: false).size
   end
-  
 end
