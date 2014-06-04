@@ -7,14 +7,11 @@ module Slugable
     else
       before_save :create_slug
     end
+    class_attribute :slug_col
   end
   
   def create_slug
-    case
-      when self.class == Post then slug = self.title.gsub(' ','_').downcase
-      when self.class == User then slug = self.username.gsub(' ','_').downcase
-      when self.class == Category then slug = self.name.gsub(' ','_').downcase
-    end
+    slug = self.send(self.slug_col.to_sym).gsub(' ', '_').downcase
     slug = slug.strip
     slug = slug.gsub(/\s*[^A-Za-z0-9]\s*/, '_')
     slug = self.slug = slug.gsub(/-+/,'_')
@@ -28,5 +25,11 @@ module Slugable
    
   def to_param
     self.slug
+  end
+  
+  module ClassMethods
+    def slugable_col(name)
+      self.slug_col = name
+    end
   end
 end
