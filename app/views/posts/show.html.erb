@@ -1,4 +1,4 @@
-<% if session[:user_id] == @post.user_id %>
+<% if user_post? %>
   <p class='pull-right'>
     <%= link_to "Edit this post", edit_post_path(@post), class:"btn btn-success" %>
   </p>
@@ -21,7 +21,7 @@
 <!-- Comment form -->
 <%= render 'shared/alert', alert: @comment.errors %>
 
-<% if logged_in? %>
+<% if logged_in?%>
   <%= form_for [@post, @comment] do |f| %>
     <div class="control-group">
       <%= f.label :body, "Leave a comment" %>
